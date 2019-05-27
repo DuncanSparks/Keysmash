@@ -1,6 +1,0 @@
-C:\Users\Duncan Sparks\Documents\Godot\Projects\Keysmash\.mono\temp\obj\Tools\Keysmash.csprojAssemblyReference.cache
-C:\Users\Duncan Sparks\Documents\Godot\Projects\Keysmash\.mono\temp\obj\Tools\Keysmash.csproj.CoreCompileInputs.cache
-C:\Users\Duncan Sparks\Documents\Godot\Projects\Keysmash\.mono\temp\bin\Tools\Keysmash.dll
-C:\Users\Duncan Sparks\Documents\Godot\Projects\Keysmash\.mono\temp\bin\Tools\Keysmash.pdb
-C:\Users\Duncan Sparks\Documents\Godot\Projects\Keysmash\.mono\temp\obj\Tools\Keysmash.dll
-C:\Users\Duncan Sparks\Documents\Godot\Projects\Keysmash\.mono\temp\obj\Tools\Keysmash.pdb
