@@ -1,0 +1,160 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Sprites/Logo.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Smash parts.png" type="Texture" id=2]
+[ext_resource path="res://Fonts/Thicket.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticlesMaterial" id=2]
+flag_disable_z = true
+spread = 135.0
+gravity = Vector3( -220, 0, 0 )
+initial_velocity = 80.0
+initial_velocity_random = 0.25
+angular_velocity = 1000.0
+angular_velocity_random = 0.08
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 360.0
+angle_random = 1.0
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[sub_resource type="DynamicFont" id=3]
+size = 12
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[node name="Scene" type="Node2D"]
+__meta__ = {
+"_edit_horizontal_guides_": [ 52.0 ],
+"_edit_vertical_guides_": [ 161.0 ]
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 320.0
+margin_bottom = 180.0
+color = Color( 0.721569, 0.721569, 0.721569, 1 )
+
+[node name="Logo1" type="Sprite" parent="."]
+position = Vector2( 27, 36 )
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 30, 32 )
+
+[node name="Logo2" type="Sprite" parent="."]
+position = Vector2( 76, 52 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 33, 0, 30, 32 )
+
+[node name="Logo3" type="Sprite" parent="."]
+position = Vector2( 110, 52 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 66, 0, 30, 32 )
+
+[node name="Logo4" type="Sprite" parent="."]
+position = Vector2( 144, 52 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 99, 0, 30, 32 )
+
+[node name="Logo5" type="Sprite" parent="."]
+position = Vector2( 178, 52 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 132, 0, 30, 32 )
+
+[node name="Logo6" type="Sprite" parent="."]
+position = Vector2( 212, 52 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 165, 0, 30, 32 )
+
+[node name="Logo7" type="Sprite" parent="."]
+position = Vector2( 246, 52 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 198, 0, 30, 32 )
+
+[node name="Logo8" type="Sprite" parent="."]
+position = Vector2( 280, 52 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 231, 0, 30, 32 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+material = SubResource( 1 )
+rotation = 4.71239
+amount = 16
+explosiveness = 1.0
+process_material = SubResource( 2 )
+texture = ExtResource( 2 )
+
+[node name="Menu1" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 127.0
+margin_top = 91.0
+margin_right = 196.0
+margin_bottom = 105.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.588235 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 0
+text = "New Game"
+align = 1
+
+[node name="Menu2" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 124.0
+margin_top = 107.0
+margin_right = 199.0
+margin_bottom = 121.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.588235 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 0
+text = "Load Game"
+align = 1
+
+[node name="Menu3" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 124.0
+margin_top = 123.0
+margin_right = 199.0
+margin_bottom = 137.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.588235 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 0
+text = "Options"
+align = 1
+
+[node name="Menu4" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 124.0
+margin_top = 139.0
+margin_right = 199.0
+margin_bottom = 153.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.588235 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 0
+text = "Exit"
+align = 1
+

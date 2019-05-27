@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/Globals/Player.cs" type="Script" id=1]
+[ext_resource path="res://Resources/Characters/Frames_Jatsu.tres" type="SpriteFrames" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 5, 4 )
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 8.0
+height = 14.0
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = ExtResource( 2 )
+animation = "dr"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 4, 15 )
+shape = SubResource( 1 )
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( 3, 4 )
+shape = SubResource( 2 )
+
+[node name="TimerDash" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.85
+one_shot = true
+
+[connection signal="timeout" from="TimerDash" to="." method="TimerDashTimeout"]
