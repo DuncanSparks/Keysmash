@@ -11,6 +11,7 @@ public class Player : KinematicBody2D
 	private float speed = 0f;
 	private Vector2 velocity = new Vector2(0, 0);
 	private Vector2 floor;
+	private float acceleration = 0f;
 
 	private float axisX;
 	private float axisY;
@@ -54,6 +55,9 @@ public class Player : KinematicBody2D
 		axisX = Input.GetActionStrength("player_moveright") - Input.GetActionStrength("player_moveleft");
 		axisY = Input.GetActionStrength("player_movedown") - Input.GetActionStrength("player_moveup");
 
+		//if (axisX != 0 && axisY != 0)
+		//acceleration = Mathf.Clamp(acceleration + (axisX != 0 || axisY != 0 ? 1f : -1f) * delta, 0, 1);
+
 		switch (state)
 		{
 			case ST.Ground:
@@ -68,6 +72,9 @@ public class Player : KinematicBody2D
 					timerDash.Start();
 				}
 
+				ChangeDirection(ref axisX, ref axisY);
+				Animation();
+
 				break;
 			}
 
@@ -79,18 +86,18 @@ public class Player : KinematicBody2D
 			}
 		}
 
-		ChangeDirection(ref axisX, ref axisY);
-		Animation();
-
 		MoveAndSlide(velocity);
+		//MoveAndSlide(velocity * acceleration);
 	}
 
 
 #if DEBUG_DRAW
+
 	public override void _Draw()
 	{
 		DrawLine(new Vector2(0, 0), new Vector2(Input.GetActionStrength("player_moveright") - Input.GetActionStrength("player_moveleft"), Input.GetActionStrength("player_movedown") - Input.GetActionStrength("player_moveup")) * 80f, new Color(1, 1, 1, 1), 5);
 	}
+
 #endif
 
 	// ================================================================
@@ -153,14 +160,21 @@ public class Player : KinematicBody2D
 				spr.Play("ul");
 				break;
 			case Direction.DL:
-				spr.Play("dl");
+			{
+				spr.SpeedScale = Mathf.Max(-axisX, axisY) < 0.5 ? Mathf.Max(-axisX, axisY) : 1;
+				spr.Play(axisX != 0 || axisY != 0 ? Mathf.Max(-axisX, axisY) >= 0.5 ? "dl_run" : "dl_walk" : "dl");
 				break;
+			}
 			case Direction.UR:
 				spr.Play("ur");
 				break;
 			case Direction.DR:
-				spr.Play("dr");
+			{
+				spr.SpeedScale = Mathf.Max(axisX, axisY) < 0.5 ? Mathf.Max(axisX, axisY) : 1;
+				spr.Play(axisX != 0 || axisY != 0 ? Mathf.Max(axisX, axisY) >= 0.5 ? "dr_run" : "dr_walk" : "dr");
 				break;
+			}
+				
 		}
 	}
 
