@@ -11,13 +11,16 @@ public class Prompts : Node
 		Main = this;
 	}
 
+	[Export]
+	private string promptFile = string.Empty;
+
 	// ================================================================
 
 	private bool anyFocused = false;
 	private int focusedIndex = 0;
 	private List<string> promptsList = new List<string>();
 
-	 private Dictionary<string, string> keyCodes = new Dictionary<string, string>()
+	private Dictionary<string, string> keyCodes = new Dictionary<string, string>()
 	{
 		{"key_a", "A"},
 		{"key_b", "B"},
@@ -72,7 +75,7 @@ public class Prompts : Node
 		{"key_apostrophe", "'"},
 		{"key_quote", "\""},
 		{"key_colon", ":"},
-		{"key_semicolon", ";"}
+		{"key_semicolon", ";"},
 	};
 
 	// Refs
@@ -92,7 +95,7 @@ public class Prompts : Node
 		File file = new File();
 		try
 		{
-			file.Open("res://Prompts/PromptsMASTER.txt", (int)File.ModeFlags.Read);
+			file.Open(promptFile, (int)File.ModeFlags.Read);
 			while (!file.EofReached())
 			{
 				string line = file.GetLine();
@@ -111,9 +114,7 @@ public class Prompts : Node
 	{
 		// Debug
 		if (Input.IsActionJustPressed("debug_1"))
-		{
 			AddPrompt(PromptsList[Mathf.RoundToInt((float)GD.RandRange(0, PromptsList.Count - 1))], new Vector2((int)GD.RandRange(0, 300), (int)GD.RandRange(0, 180)));
-		}
 
 		if (Input.IsActionJustPressed("cancel_prompt") && anyFocused)
 		{
@@ -125,7 +126,7 @@ public class Prompts : Node
 		if (Input.IsActionJustPressed("select_up") && anyFocused)
 		{
 			GetChild<Prompt>(focusedIndex).Reset();
-			focusedIndex = Mathf.Wrap(focusedIndex - 1, 0, GetChildren().Count - 1);
+			focusedIndex = Mathf.Wrap(focusedIndex - 1, 0, GetChildren().Count);
 			GetChild<Prompt>(focusedIndex).Focused = true;
 			return;
 		}
@@ -133,7 +134,7 @@ public class Prompts : Node
 		if (Input.IsActionJustPressed("select_down") && anyFocused)
 		{
 			GetChild<Prompt>(focusedIndex).Reset();
-			focusedIndex = Mathf.Wrap(focusedIndex + 1, 0, GetChildren().Count - 1);
+			focusedIndex = Mathf.Wrap(focusedIndex + 1, 0, GetChildren().Count);
 			GetChild<Prompt>(focusedIndex).Focused = true;
 			return;
 		}
@@ -144,7 +145,10 @@ public class Prompts : Node
 			foreach (var action in keyCodes)
 			{
 				if (Input.IsActionJustPressed(action.Key) && p.PromptText[p.TextPosition].ToString().ToUpper() == action.Value)
+				{
 					IncrementPosition(ref p);
+					return;
+				}
 			}
 		}
 		else
@@ -167,51 +171,6 @@ public class Prompts : Node
 		}
 	}
 
-
-	/* public override void _Input(InputEvent @event)
-	{
-		if (@event is InputEventKey)
-		{
-			var ev = (InputEventKey)@event;
-
-			//if (OS.GetScancodeString(ev.Scancode) == "Shift+comma")
-				//GD.Print("hello");
-			GD.Print(OS.GetScancodeString(ev.Scancode));
-
-			if (ev.Scancode == (int)KeyList.Tab && anyFocused)
-			{
-				GetChild<Prompt>(focusedIndex).Reset();
-				anyFocused = false;
-				return;
-			}
-
-			if (anyFocused)
-			{
-				var p = GetChild<Prompt>(focusedIndex);
-				//if (OS.GetScancodeString(ev.Scancode) == "Shift+comma")
-				//GD.Print("hello");
-				//GD.Print(OS.GetScancodeString(ev.Scancode));
-				//if (p.PromptText[p.TextPosition].ToString().ToUpper() == keyCodes[OS.GetScancodeString(ev.Scancode).ToUpper()])
-					//IncrementPosition(ref p);
-			}
-			else
-			{
-				for (int i = 0; i < GetChildren().Count; i++)
-				{
-					var p = GetChild<Prompt>(i);
-					if (p.PromptText[0].ToString().ToUpper() == OS.GetScancodeString(ev.Scancode))
-					{
-						p.Focused = true;
-						IncrementPosition(ref p);
-						focusedIndex = i;
-						anyFocused = true;
-						break;
-					}
-				}
-			}
-		}
-	}*/
-
 	// ================================================================
 
 	public static void AddPrompt(string text, Vector2 position)
@@ -228,8 +187,11 @@ public class Prompts : Node
 	{
 		prompt.TextPosition++;
 		if (prompt.TextPosition >= prompt.PromptText.Length)
+		{
 			prompt.Finished = true;
-		
+			return;
+		}
+
 		if (!prompt.Finished)
 			while (prompt.PromptText[prompt.TextPosition] == ' ')
 				prompt.TextPosition++;

@@ -1,18 +1,46 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Globals/Player.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Characters/Shadow.png" type="Texture" id=2]
-[ext_resource path="res://Resources/Characters/Frames_Jatsu.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://Sprites/Particles/Smoke.png" type="Texture" id=3]
+[ext_resource path="res://Resources/Characters/Frames_Jatsu.tres" type="SpriteFrames" id=4]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.147541, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 2
+emission_box_extents = Vector3( 4, 1, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, -98, 0 )
+initial_velocity = 22.0
+initial_velocity_random = 0.5
+angular_velocity = 200.0
+angular_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 360.0
+angle_random = 1.0
+scale = 0.75
+scale_random = 0.5
+color_ramp = SubResource( 2 )
+
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 5, 4 )
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=5]
 radius = 8.0
 height = 14.0
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Shadow" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0.25098 )
@@ -20,25 +48,45 @@ position = Vector2( -3, 16 )
 texture = ExtResource( 2 )
 centered = false
 
+[node name="PartsRun" type="Particles2D" parent="."]
+position = Vector2( 4, 18 )
+rotation = 3.14159
+emitting = false
+amount = 4
+lifetime = 0.45
+local_coords = false
+process_material = SubResource( 3 )
+texture = ExtResource( 3 )
+
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 3, 4 )
-frames = ExtResource( 3 )
+frames = ExtResource( 4 )
 animation = "dr"
 offset = Vector2( -3, -4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 4, 15 )
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="Hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( 3, 4 )
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="TimerDash" type="Timer" parent="."]
 process_mode = 0
 wait_time = 0.85
 one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+limit_left = 0
+limit_top = 0
+limit_bottom = 180
+smoothing_enabled = true
+smoothing_speed = 8.0
+drag_margin_left = 0.5
+drag_margin_right = 0.5
 
 [connection signal="timeout" from="TimerDash" to="." method="TimerDashTimeout"]

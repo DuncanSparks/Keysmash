@@ -11,7 +11,7 @@ public class Player : KinematicBody2D
 	private float speed = 0f;
 	private Vector2 velocity = new Vector2(0, 0);
 	private Vector2 floor;
-	private float acceleration = 0f;
+	//private float acceleration = 0f;
 
 	private float axisX;
 	private float axisY;
@@ -27,11 +27,13 @@ public class Player : KinematicBody2D
 	private const float dashStrength = 450f;
 	private readonly Vector2 dash = new Vector2(dashStrength, dashStrength);
 	private const float dashDecay = 57f;
+	private const float acceleration = 400f;
 
 	// Refs
 	private AnimatedSprite spr;
 	//private CollisionShape2D coll;
 	private Timer timerDash;
+	private Particles2D partsRun;
 
 	// ================================================================
 
@@ -39,15 +41,20 @@ public class Player : KinematicBody2D
 	{
 		spr = GetNode<AnimatedSprite>("Sprite");
 		timerDash = GetNode<Timer>("TimerDash");
+		partsRun = GetNode<Particles2D>("PartsRun");
 	}
 
 
-#if DEBUG_DRAW
+
 	public override void _Process(float delta)
 	{
-		Update();
+		partsRun.Emitting = Mathf.Abs(axisX) > 0.5 || Mathf.Abs(axisY) > 0.5;
+
+		#if DEBUG_DRAW
+			Update();
+		#endif
 	}
-#endif
+
 
 
 	public override void _PhysicsProcess(float delta)
@@ -64,6 +71,7 @@ public class Player : KinematicBody2D
 			{
 				velocity.x = axisX * speedCap;
 				velocity.y = axisY * speedCap;
+
 
 				if (Input.IsActionJustPressed("player_dash"))
 				{
@@ -88,16 +96,15 @@ public class Player : KinematicBody2D
 
 		MoveAndSlide(velocity);
 		//MoveAndSlide(velocity * acceleration);
+		//GD.Print(Performance.GetMonitor(Performance.Monitor.TimeFps));
 	}
 
 
 #if DEBUG_DRAW
-
 	public override void _Draw()
 	{
 		DrawLine(new Vector2(0, 0), new Vector2(Input.GetActionStrength("player_moveright") - Input.GetActionStrength("player_moveleft"), Input.GetActionStrength("player_movedown") - Input.GetActionStrength("player_moveup")) * 80f, new Color(1, 1, 1, 1), 5);
 	}
-
 #endif
 
 	// ================================================================
@@ -156,7 +163,7 @@ public class Player : KinematicBody2D
 	{
 		switch (dir)
 		{
-			case Direction.UL:
+			/* case Direction.UL:
 				spr.Play("ul");
 				break;
 			case Direction.DL:
@@ -168,6 +175,31 @@ public class Player : KinematicBody2D
 			case Direction.UR:
 				spr.Play("ur");
 				break;
+			case Direction.DR:
+			{
+				spr.SpeedScale = Mathf.Max(axisX, axisY) < 0.5 ? Mathf.Max(axisX, axisY) : 1;
+				spr.Play(axisX != 0 || axisY != 0 ? Mathf.Max(axisX, axisY) >= 0.5 ? "dr_run" : "dr_walk" : "dr");
+				break;
+			} */
+
+			case Direction.UL:
+			{
+				spr.SpeedScale = Mathf.Max(-axisX, axisY) < 0.5 ? Mathf.Max(-axisX, axisY) : 1;
+				spr.Play(axisX != 0 || axisY != 0 ? Mathf.Max(-axisX, axisY) >= 0.5 ? "dl_run" : "dl_walk" : "dl");
+				break;
+			}
+			case Direction.DL:
+			{
+				spr.SpeedScale = Mathf.Max(-axisX, axisY) < 0.5 ? Mathf.Max(-axisX, axisY) : 1;
+				spr.Play(axisX != 0 || axisY != 0 ? Mathf.Max(-axisX, axisY) >= 0.5 ? "dl_run" : "dl_walk" : "dl");
+				break;
+			}
+			case Direction.UR:
+			{
+				spr.SpeedScale = Mathf.Max(axisX, axisY) < 0.5 ? Mathf.Max(axisX, axisY) : 1;
+				spr.Play(axisX != 0 || axisY != 0 ? Mathf.Max(axisX, axisY) >= 0.5 ? "dr_run" : "dr_walk" : "dr");
+				break;
+			}
 			case Direction.DR:
 			{
 				spr.SpeedScale = Mathf.Max(axisX, axisY) < 0.5 ? Mathf.Max(axisX, axisY) : 1;
