@@ -14,6 +14,12 @@ public class Prompts : Node
 	[Export]
 	private string promptFile = string.Empty;
 
+	[Export]
+	private AudioStream typeSound;
+
+	[Export]
+	private AudioStream cancelSound;
+
 	// ================================================================
 
 	private bool anyFocused = false;
@@ -82,6 +88,8 @@ public class Prompts : Node
 	private PackedScene promptRef = GD.Load<PackedScene>("res://Instances/Prompt.tscn");
 	private DynamicFont textFont = GD.Load<DynamicFont>("res://Fonts/TextFont.tres");
 
+	private AudioStreamPlayer soundType;
+
 	// ================================================================
 
 	public bool AnyFocused { get => Prompts.Main.anyFocused; set => Prompts.Main.anyFocused = value; }
@@ -114,10 +122,11 @@ public class Prompts : Node
 	{
 		// Debug
 		if (Input.IsActionJustPressed("debug_1"))
-			AddPrompt(PromptsList[Mathf.RoundToInt((float)GD.RandRange(0, PromptsList.Count - 1))], new Vector2((int)GD.RandRange(0, 300), (int)GD.RandRange(0, 180)));
+			AddPrompt(PromptsList[Mathf.RoundToInt((float)GD.RandRange(0, PromptsList.Count - 1))], new Vector2((int)GD.RandRange(0, 300), (int)GD.RandRange(0, 180)), null, new Vector2(0, 0));
 
 		if (Input.IsActionJustPressed("cancel_prompt") && anyFocused)
 		{
+			Controller.PlaySoundBurst(cancelSound, 0.5f, 1.5f);
 			GetChild<Prompt>(focusedIndex).Reset();
 			anyFocused = false;
 			return;
@@ -173,18 +182,30 @@ public class Prompts : Node
 
 	// ================================================================
 
-	public static void AddPrompt(string text, Vector2 position)
+	public static void AddPrompt(string text, Vector2 position, KinematicBody2D followTarget, Vector2 followOffset)
 	{
 		var promptInst = (Prompt)Prompts.Main.promptRef.Instance();
 		promptInst.PromptText = text;
 		promptInst.Position = position;
 		promptInst.TextFont = Prompts.Main.textFont;
+
+		if (followTarget != null)
+		{
+			promptInst.FollowTarget = followTarget;
+			promptInst.Follower = true;
+			promptInst.FollowOffset = followOffset;
+		}
+
 		Prompts.Main.AddChild(promptInst);
 	}
 
 
 	public static void IncrementPosition(ref Prompt prompt)
 	{
+		Controller.PlaySoundBurst(Prompts.Main.typeSound, 0.2f, (float)GD.RandRange(1d, 1.2));
+		prompt.EmitParts();
+		prompt.Shake(Tools.Choose(1, 2));
+
 		prompt.TextPosition++;
 		if (prompt.TextPosition >= prompt.PromptText.Length)
 		{
@@ -195,5 +216,11 @@ public class Prompts : Node
 		if (!prompt.Finished)
 			while (prompt.PromptText[prompt.TextPosition] == ' ')
 				prompt.TextPosition++;
+	}
+
+
+	public static void AddRandomPrompt(Vector2 position, KinematicBody2D followTarget, Vector2 followOffset)
+	{
+		AddPrompt(Prompts.Main.PromptsList[Mathf.RoundToInt((float)GD.RandRange(0, Prompts.Main.PromptsList.Count - 1))], position, followTarget, followOffset);
 	}
 }

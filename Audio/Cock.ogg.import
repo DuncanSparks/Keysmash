@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Cock.ogg-05883ba6990d9347dbd38b4458f4021b.oggstr"
+
+[deps]
+
+source_file="res://Audio/Cock.ogg"
+dest_files=[ "res://.import/Cock.ogg-05883ba6990d9347dbd38b4458f4021b.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

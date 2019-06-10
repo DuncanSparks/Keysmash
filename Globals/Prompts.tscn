@@ -1,8 +1,12 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Globals/Prompts.cs" type="Script" id=1]
+[ext_resource path="res://Audio/Hit.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Audio/Cock.ogg" type="AudioStream" id=3]
 
 [node name="Prompts" type="Node"]
 script = ExtResource( 1 )
 promptFile = "res://Prompts/PromptsMASTER.txt"
+typeSound = ExtResource( 2 )
+cancelSound = ExtResource( 3 )
 

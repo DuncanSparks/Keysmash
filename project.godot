@@ -17,7 +17,7 @@ _global_script_class_icons={
 
 config/name="Keysmash"
 run/main_scene="res://Scenes/Title.tscn"
-config/icon="res://icon.png"
+config/icon="res://KEYSMASH icon.png"
 
 [audio]
 
@@ -59,6 +59,10 @@ texture={
 "size_limit": 0,
 "stream": false,
 "svg/scale": 1.0
+}
+ogg_vorbis={
+"loop": false,
+"loop_offset": 0
 }
 
 [input]
@@ -387,6 +391,11 @@ player_jump={
 player_dash={
 "deadzone": 0.5,
 "events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+sys_fullscreen={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777247,"unicode":0,"echo":false,"script":null)
  ]
 }
 

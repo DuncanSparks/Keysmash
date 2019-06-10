@@ -40,6 +40,9 @@ __meta__ = {
 margin_right = 320.0
 margin_bottom = 180.0
 color = Color( 0.721569, 0.721569, 0.721569, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Logo1" type="Sprite" parent="."]
 position = Vector2( 27, 36 )

@@ -1,25 +1,79 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Prompt.cs" type="Script" id=1]
-[ext_resource path="res://Sprites/Typebox.png" type="Texture" id=2]
-[ext_resource path="res://Fonts/Softsquare.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://Sprites/Arrow.png" type="Texture" id=4]
+[ext_resource path="res://Audio/Shatter.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Sprites/Typebox.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/Softsquare.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Sprites/Crosshair.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 9
-font_data = ExtResource( 3 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Crosshair Fade"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Crosshair:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.431373, 0.431373, 0.431373, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Crosshair2:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.431373, 0.431373, 0.431373, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Crosshair3:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.431373, 0.431373, 0.431373, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Crosshair4:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.431373, 0.431373, 0.431373, 1 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="Prompt" type="Node2D"]
-position = Vector2( 127, 62 )
+z_index = 2000
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
+shatterSound = ExtResource( 2 )
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
-margin_right = 54.0
+margin_right = 14.0
 margin_bottom = 26.0
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 12, 12 )
 patch_margin_left = 2
 patch_margin_top = 2
@@ -29,25 +83,52 @@ patch_margin_bottom = 2
 [node name="Text" type="Label" parent="."]
 margin_left = 5.0
 margin_top = 4.0
-margin_right = 50.0
+margin_right = 10.0
 margin_bottom = 18.0
 custom_fonts/font = SubResource( 1 )
-text = "Hello there"
+text = "H"
 align = 2
 
 [node name="TextProgress" type="Label" parent="."]
 margin_left = 5.0
 margin_top = 15.0
-margin_right = 50.0
+margin_right = 10.0
 margin_bottom = 36.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.784314, 0.784314, 0.784314, 1 )
-text = "Hello there
+text = "H
 "
 align = 2
 
-[node name="Arrow" type="Sprite" parent="."]
+[node name="Crosshair" type="Sprite" parent="."]
 visible = false
-position = Vector2( 27, -5 )
-texture = ExtResource( 4 )
+position = Vector2( 0, -1 )
+texture = ExtResource( 5 )
 
+[node name="Crosshair2" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -1 )
+scale = Vector2( -1, 1 )
+texture = ExtResource( 5 )
+
+[node name="Crosshair3" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -1 )
+scale = Vector2( 1, -1 )
+texture = ExtResource( 5 )
+
+[node name="Crosshair4" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -1 )
+scale = Vector2( -1, -1 )
+texture = ExtResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Crosshair Fade"
+"anims/Crosshair Fade" = SubResource( 2 )
+
+[node name="TimerShake" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[connection signal="timeout" from="TimerShake" to="." method="EndShake"]
