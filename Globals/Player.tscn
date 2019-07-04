@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Globals/Player.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Characters/Shadow.png" type="Texture" id=2]
@@ -36,7 +36,12 @@ extents = Vector2( 5, 4 )
 radius = 8.0
 height = 14.0
 
-[node name="Player" type="KinematicBody2D"]
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 13, 19 )
+
+[node name="Player" type="KinematicBody2D" groups=[
+"Player",
+]]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -73,6 +78,13 @@ shape = SubResource( 4 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( 3, 4 )
 shape = SubResource( 5 )
+
+[node name="OverlapBox" type="Area2D" parent="." groups=[
+"PlayerOverlapBox",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OverlapBox"]
+shape = SubResource( 6 )
 
 [node name="TimerDash" type="Timer" parent="."]
 process_mode = 0

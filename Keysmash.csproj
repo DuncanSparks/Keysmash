@@ -55,6 +55,7 @@
     <Compile Include="Scripts\Globals\Player.cs" />
     <Compile Include="Scripts\Globals\Prompts.cs" />
     <Compile Include="Scripts\Prompt.cs" />
+    <Compile Include="Scripts\Scenes\Title.cs" />
     <Compile Include="Scripts\Tools.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

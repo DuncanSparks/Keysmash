@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Prompt.cs" type="Script" id=1]
 [ext_resource path="res://Audio/Shatter.ogg" type="AudioStream" id=2]
@@ -9,6 +9,9 @@
 [sub_resource type="DynamicFont" id=1]
 size = 9
 font_data = ExtResource( 4 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 5, 13 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "Crosshair Fade"
@@ -62,6 +65,38 @@ tracks/3/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.431373, 0.431373, 0.431373, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
+[sub_resource type="Animation" id=5]
+resource_name = "Fade in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("NinePatchRect:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.333333 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Fade out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("NinePatchRect:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.333333 ) ]
+}
+
 [node name="Prompt" type="Node2D"]
 z_index = 2000
 script = ExtResource( 1 )
@@ -100,25 +135,42 @@ text = "H
 "
 align = 2
 
+[node name="AreaOverlap" type="Area2D" parent="."]
+position = Vector2( 7, 13 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaOverlap"]
+modulate = Color( 0.501961, 1, 0, 1 )
+shape = SubResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
 [node name="Crosshair" type="Sprite" parent="."]
 visible = false
+self_modulate = Color( 0.431373, 0.431373, 0.431373, 1 )
 position = Vector2( 0, -1 )
 texture = ExtResource( 5 )
 
 [node name="Crosshair2" type="Sprite" parent="."]
 visible = false
+self_modulate = Color( 0.431373, 0.431373, 0.431373, 1 )
 position = Vector2( 0, -1 )
 scale = Vector2( -1, 1 )
 texture = ExtResource( 5 )
 
 [node name="Crosshair3" type="Sprite" parent="."]
 visible = false
+self_modulate = Color( 0.431373, 0.431373, 0.431373, 1 )
 position = Vector2( 0, -1 )
 scale = Vector2( 1, -1 )
 texture = ExtResource( 5 )
 
 [node name="Crosshair4" type="Sprite" parent="."]
 visible = false
+self_modulate = Color( 0.431373, 0.431373, 0.431373, 1 )
 position = Vector2( 0, -1 )
 scale = Vector2( -1, -1 )
 texture = ExtResource( 5 )
@@ -127,8 +179,14 @@ texture = ExtResource( 5 )
 autoplay = "Crosshair Fade"
 "anims/Crosshair Fade" = SubResource( 2 )
 
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+"anims/Fade in" = SubResource( 5 )
+"anims/Fade out" = SubResource( 4 )
+
 [node name="TimerShake" type="Timer" parent="."]
 wait_time = 0.05
 one_shot = true
 
+[connection signal="area_entered" from="AreaOverlap" to="." method="StartOverlap"]
+[connection signal="area_exited" from="AreaOverlap" to="." method="EndOverlap"]
 [connection signal="timeout" from="TimerShake" to="." method="EndShake"]

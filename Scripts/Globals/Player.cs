@@ -5,6 +5,15 @@ using System;
 
 public class Player : KinematicBody2D
 {
+	public static Player Main;
+
+	Player()
+	{
+		Main = this;
+	}
+
+	// ================================================================
+
 	//[Export]
 	//private float jumpHeight = 0f;
 	
@@ -59,6 +68,8 @@ public class Player : KinematicBody2D
 
 	public override void _PhysicsProcess(float delta)
 	{
+		ZIndex = (int)Position.y;
+
 		axisX = Input.GetActionStrength("player_moveright") - Input.GetActionStrength("player_moveleft");
 		axisY = Input.GetActionStrength("player_movedown") - Input.GetActionStrength("player_moveup");
 

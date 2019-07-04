@@ -1,12 +1,18 @@
-[gd_resource type="SpriteFrames" load_steps=2 format=2]
+[gd_resource type="SpriteFrames" load_steps=3 format=2]
 
 [ext_resource path="res://Sprites/Characters/Enemies/Glitch/Glitch_L1.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Characters/Enemies/Glitch/Glitch_L1_hurt.png" type="Texture" id=2]
 
 [resource]
 animations = [ {
 "frames": [ ExtResource( 1 ) ],
 "loop": true,
 "name": "l",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "l_hurt",
 "speed": 5.0
 } ]
 

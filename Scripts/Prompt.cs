@@ -6,6 +6,9 @@ public class Prompt : Node2D
 	[Export]
 	private AudioStream shatterSound;
 
+	[Signal]
+	delegate void Destroyed();
+
 	private int textPosition = 0;
 	private string promptText = string.Empty;
 	private string promptProgress;
@@ -27,6 +30,7 @@ public class Prompt : Node2D
 	private Sprite cs2;
 	private Sprite cs3;
 	private Sprite cs4;
+	private AnimationPlayer animPlayer2;
 	private Timer timerShake;
 	private Prompts promptController;
 
@@ -47,7 +51,6 @@ public class Prompt : Node2D
 
 	public override void _Ready()
 	{
-		
 		text = GetNode<Label>("Text");
 		textProgress = GetNode<Label>("TextProgress");
 		box = GetNode<NinePatchRect>("NinePatchRect");
@@ -55,18 +58,12 @@ public class Prompt : Node2D
 		cs2 = GetNode<Sprite>("Crosshair2");
 		cs3 = GetNode<Sprite>("Crosshair3");
 		cs4 = GetNode<Sprite>("Crosshair4");
+		animPlayer2 = GetNode<AnimationPlayer>("AnimationPlayer2");
 		timerShake = GetNode<Timer>("TimerShake");
 		promptController = GetParent<Prompts>();
 		
 		promptProgress = promptText;
 		text.Text = promptText;
-
-		//box.MarginRight += textFont.GetStringSize(text.Text).x - 45;//text.RectSize.x;
-		//text.MarginLeft -= Mathf.Max(0, ((textFont.GetStringSize(text.Text).x) / 2) - 54);
-		//box.MarginLeft += Mathf.max
-		//box.MarginLeft -= Mathf.max
-		//text.MarginLeft -= Mathf.Max(0, textFont.GetStringSize(text.Text).x);
-		//text.GetFont
 
 		box.MarginRight += textFont.GetStringSize(text.Text).x - 5;
 
@@ -74,6 +71,10 @@ public class Prompt : Node2D
 		cs2.Position += new Vector2(boxWidth, 0);
 		cs3.Position += new Vector2(0, 28);
 		cs4.Position += new Vector2(boxWidth, 28);
+
+		var overlap = GetNode<Area2D>("AreaOverlap");
+		overlap.Position = new Vector2(boxWidth / 2f, overlap.Position.y);
+		overlap.Scale = new Vector2(boxWidth / 10f, 1);
 	}
 
 
@@ -92,6 +93,7 @@ public class Prompt : Node2D
 		{
 			Shatter();
 			promptController.AnyFocused = false;
+			EmitSignal(nameof(Destroyed));
 			QueueFree();
 		}
 	}
@@ -159,5 +161,19 @@ public class Prompt : Node2D
 		
 		parts.Emitting = true;
 		GetTree().GetRoot().AddChild(parts);
-	} 
+	}
+
+
+	private void StartOverlap(Area2D area)
+	{
+		if (area.IsInGroup("PlayerOverlapBox"))
+			animPlayer2.Play("Fade out");
+	}
+
+
+	private void EndOverlap(Area2D area)
+	{
+		if (area.IsInGroup("PlayerOverlapBox"))
+			animPlayer2.Play("Fade in");
+	}
 }

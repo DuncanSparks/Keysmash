@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Globals/Controller.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Frame.png" type="Texture" id=2]
 [ext_resource path="res://Shaders/Overlay.shader" type="Shader" id=3]
+[ext_resource path="res://Sprites/UI/Healthbar icon.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/UI/Healthbar segment.png" type="Texture" id=5]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 3 )
@@ -25,7 +27,35 @@ __meta__ = {
 material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="HealthbarIcon" type="Sprite" parent="CanvasLayer2"]
+position = Vector2( 9, 9 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Healthbar1" type="Sprite" parent="CanvasLayer2"]
+position = Vector2( 38, 21 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="Healthbar2" type="Sprite" parent="CanvasLayer2"]
+position = Vector2( 65, 21 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="Healthbar3" type="Sprite" parent="CanvasLayer2"]
+position = Vector2( 92, 21 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="Healthbar4" type="Sprite" parent="CanvasLayer2"]
+position = Vector2( 119, 21 )
+texture = ExtResource( 5 )
+centered = false
 

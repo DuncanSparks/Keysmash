@@ -196,6 +196,8 @@ public class Prompts : Node
 			promptInst.FollowOffset = followOffset;
 		}
 
+		promptInst.Connect("Destroyed", followTarget, "PromptDestroyed");
+
 		Prompts.Main.AddChild(promptInst);
 	}
 
