@@ -11,7 +11,7 @@ gradient = SubResource( 1 )
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 100.0
+initial_velocity = 120.0
 initial_velocity_random = 0.25
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
@@ -24,7 +24,7 @@ color_ramp = SubResource( 2 )
 [node name="PartsEnemyDie" type="Particles2D"]
 z_index = 2100
 emitting = false
-amount = 14
+amount = 24
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource( 3 )

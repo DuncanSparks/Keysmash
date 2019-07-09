@@ -1,14 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Enemies/Glitch.cs" type="Script" id=1]
-[ext_resource path="res://Sprites/Characters/Shadow.png" type="Texture" id=2]
-[ext_resource path="res://Resources/Enemies/Glitch/Frames_Glitch1.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://Audio/Shock.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Sprites/Characters/Shadow.png" type="Texture" id=3]
+[ext_resource path="res://Resources/Enemies/Glitch/Frames_Glitch1.tres" type="SpriteFrames" id=4]
 
 [sub_resource type="ParticlesMaterial" id=1]
 emission_shape = 2
 emission_box_extents = Vector3( 25, 25, 1 )
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
+angular_velocity = 4.89053e-043
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
@@ -22,20 +24,37 @@ extents = Vector2( 5, 4 )
 radius = 7.0
 height = 16.0
 
+[sub_resource type="Animation" id=4]
+resource_name = "Spin"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.8, 1, 1.2, 1.5, 1.8, 2.2, 2.7, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.757858, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
+}
+
 [node name="Glitch" type="KinematicBody2D"]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
+deathSound = ExtResource( 2 )
 
 [node name="Shadow" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0.25098 )
 position = Vector2( -6, 16 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 centered = false
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
-frames = ExtResource( 3 )
+frames = ExtResource( 4 )
 animation = "l"
 
 [node name="Particles2D" type="Particles2D" parent="."]
@@ -53,8 +72,22 @@ shape = SubResource( 2 )
 position = Vector2( 1, 4 )
 shape = SubResource( 3 )
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Spin = SubResource( 4 )
+
+[node name="TimerStunBuffer" type="Timer" parent="."]
+wait_time = 0.02
+one_shot = true
+
+[node name="TimerStun" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [node name="TimerDie" type="Timer" parent="."]
 wait_time = 0.35
 one_shot = true
 
+[connection signal="area_entered" from="Hitbox" to="." method="HBEntered"]
+[connection signal="timeout" from="TimerStunBuffer" to="." method="Stun"]
+[connection signal="timeout" from="TimerStun" to="." method="StunEnd"]
 [connection signal="timeout" from="TimerDie" to="." method="TimerDie"]

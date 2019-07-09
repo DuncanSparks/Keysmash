@@ -92,6 +92,7 @@ public class Prompts : Node
 
 	// ================================================================
 
+	public string PromptFile { get => Prompts.Main.promptFile; set => Prompts.Main.promptFile = value; }
 	public bool AnyFocused { get => Prompts.Main.anyFocused; set => Prompts.Main.anyFocused = value; }
 	public int FocusedIndex { get => Prompts.Main.focusedIndex; set => Prompts.Main.focusedIndex = value; }
 	public List<string> PromptsList { get => Prompts.Main.promptsList; }
@@ -100,21 +101,7 @@ public class Prompts : Node
 
 	public override void _Ready()
 	{
-		File file = new File();
-		try
-		{
-			file.Open(promptFile, (int)File.ModeFlags.Read);
-			while (!file.EofReached())
-			{
-				string line = file.GetLine();
-				promptsList.Add(line);
-			}
-		}
-		finally
-		{
-			if (file.IsOpen())
-				file.Close();
-		}
+		LoadPromptFile();
 	}
 
 
@@ -224,5 +211,28 @@ public class Prompts : Node
 	public static void AddRandomPrompt(Vector2 position, KinematicBody2D followTarget, Vector2 followOffset)
 	{
 		AddPrompt(Prompts.Main.PromptsList[Mathf.RoundToInt((float)GD.RandRange(0, Prompts.Main.PromptsList.Count - 1))], position, followTarget, followOffset);
+	}
+
+
+	// ================================================================
+
+	private void LoadPromptFile()
+	{
+		promptsList.Clear();
+		File file = new File();
+		try
+		{
+			file.Open(promptFile, (int)File.ModeFlags.Read);
+			while (!file.EofReached())
+			{
+				string line = file.GetLine();
+				promptsList.Add(line);
+			}
+		}
+		finally
+		{
+			if (file.IsOpen())
+				file.Close();
+		}
 	}
 }

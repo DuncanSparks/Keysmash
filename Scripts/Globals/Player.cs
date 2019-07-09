@@ -43,6 +43,12 @@ public class Player : KinematicBody2D
 	//private CollisionShape2D coll;
 	private Timer timerDash;
 	private Particles2D partsRun;
+	private Camera2D playerCamera;
+
+	// ================================================================
+
+	public static ST State { get => Player.Main.state; set => Player.Main.state = value; }
+	public static Camera2D PlayerCamera { get => Player.Main.playerCamera; }
 
 	// ================================================================
 
@@ -51,6 +57,7 @@ public class Player : KinematicBody2D
 		spr = GetNode<AnimatedSprite>("Sprite");
 		timerDash = GetNode<Timer>("TimerDash");
 		partsRun = GetNode<Particles2D>("PartsRun");
+		playerCamera = GetNode<Camera2D>("Camera2D");
 	}
 
 
@@ -196,25 +203,25 @@ public class Player : KinematicBody2D
 			case Direction.UL:
 			{
 				spr.SpeedScale = Mathf.Max(-axisX, axisY) < 0.5 ? Mathf.Max(-axisX, axisY) : 1;
-				spr.Play(axisX != 0 || axisY != 0 ? Mathf.Max(-axisX, axisY) >= 0.5 ? "dl_run" : "dl_walk" : "dl");
+				spr.Play(state == ST.Dash ? "dl_slide" : axisX != 0 || axisY != 0 ? Mathf.Max(-axisX, axisY) >= 0.5 ? "dl_run" : "dl_walk" : "dl");
 				break;
 			}
 			case Direction.DL:
 			{
 				spr.SpeedScale = Mathf.Max(-axisX, axisY) < 0.5 ? Mathf.Max(-axisX, axisY) : 1;
-				spr.Play(axisX != 0 || axisY != 0 ? Mathf.Max(-axisX, axisY) >= 0.5 ? "dl_run" : "dl_walk" : "dl");
+				spr.Play(state == ST.Dash ? "dl_slide" : axisX != 0 || axisY != 0 ? Mathf.Max(-axisX, axisY) >= 0.5 ? "dl_run" : "dl_walk" : "dl");
 				break;
 			}
 			case Direction.UR:
 			{
 				spr.SpeedScale = Mathf.Max(axisX, axisY) < 0.5 ? Mathf.Max(axisX, axisY) : 1;
-				spr.Play(axisX != 0 || axisY != 0 ? Mathf.Max(axisX, axisY) >= 0.5 ? "dr_run" : "dr_walk" : "dr");
+				spr.Play(state == ST.Dash ? "dr_slide" : axisX != 0 || axisY != 0 ? Mathf.Max(axisX, axisY) >= 0.5 ? "dr_run" : "dr_walk" : "dr");
 				break;
 			}
 			case Direction.DR:
 			{
 				spr.SpeedScale = Mathf.Max(axisX, axisY) < 0.5 ? Mathf.Max(axisX, axisY) : 1;
-				spr.Play(axisX != 0 || axisY != 0 ? Mathf.Max(axisX, axisY) >= 0.5 ? "dr_run" : "dr_walk" : "dr");
+				spr.Play(state == ST.Dash ? "dr_slide" : axisX != 0 || axisY != 0 ? Mathf.Max(axisX, axisY) >= 0.5 ? "dr_run" : "dr_walk" : "dr");
 				break;
 			}
 				

@@ -9,15 +9,24 @@ public class Glitch : KinematicBody2D
 	[Export]
 	private Vector2 followOffset = new Vector2(0, 0);
 
+	[Export]
+	private AudioStream deathSound;
+
 	private Vector2 motion = new Vector2(0, 0);
 
 	private float speed = 50f;
 	private bool move = true;
+	private bool stunned = false;
 	private bool shake = false;
 
 	// Refs
 	private AnimatedSprite spr;
+	private AnimationPlayer animPlayer;
+	private Timer timerStunBuffer;
+	private Timer timerStun;
 	private Timer timerDie;
+
+	private CollisionShape2D coll;
 
 	private PackedScene partsDie = GD.Load<PackedScene>("res://Instances/Particles/PartsEnemyDie.tscn");
 
@@ -30,7 +39,12 @@ public class Glitch : KinematicBody2D
 	public override void _Ready()
 	{
 		spr = GetNode<AnimatedSprite>("Sprite");
+		animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		timerStunBuffer = GetNode<Timer>("TimerStunBuffer");
+		timerStun = GetNode<Timer>("TimerStun");
 		timerDie = GetNode<Timer>("TimerDie");
+
+		coll = GetNode<CollisionShape2D>("CollisionShape2D");
 
 		//spr.Frames = enemySprites[Mathf.RoundToInt((float)GD.RandRange(0, enemySprites.Count))];
 	
@@ -58,17 +72,45 @@ public class Glitch : KinematicBody2D
 
 	// ================================================================
 
+	public void Stun()
+	{
+		move = false;
+		stunned = true;
+		coll.Disabled = true;
+		spr.Play("l_dizzy");
+		animPlayer.Play("Spin");
+		timerStun.Start();
+	}
+
+	// ================================================================
+
+	private void HBEntered(Area2D area)
+	{
+		if (!stunned && area.IsInGroup("PlayerHB") && Player.State == Player.ST.Dash)
+			timerStunBuffer.Start();
+	}
+
 	private void PromptDestroyed()
 	{
 		move = false;
 		shake = true;
 		spr.Play("l_hurt");
 		timerDie.Start();
-	} 
+	}
+
+
+	private void StunEnd()
+	{
+		move = true;
+		coll.Disabled = false;
+		spr.Play("l");
+		stunned = false;
+	}
 
 
 	private void TimerDie()
 	{
+		Controller.PlaySoundBurst(deathSound, pitch: (float)GD.RandRange(0.9, 1.1));
 		var parts = (Particles2D)partsDie.Instance();
 		parts.Position = Position;
 		parts.Emitting = true;

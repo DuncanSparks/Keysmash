@@ -27,7 +27,6 @@ enable_audio_input=true
 
 Controller="*res://Globals/Controller.tscn"
 Prompts="*res://Globals/Prompts.tscn"
-Player="*res://Globals/Player.tscn"
 
 [display]
 

@@ -73,7 +73,9 @@ offset = Vector2( -3, -4 )
 position = Vector2( 4, 15 )
 shape = SubResource( 4 )
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="." groups=[
+"PlayerHB",
+]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( 3, 4 )
