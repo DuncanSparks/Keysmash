@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Enemies/Glitch.cs" type="Script" id=1]
 [ext_resource path="res://Audio/Shock.ogg" type="AudioStream" id=2]
 [ext_resource path="res://Sprites/Characters/Shadow.png" type="Texture" id=3]
 [ext_resource path="res://Resources/Enemies/Glitch/Frames_Glitch1.tres" type="SpriteFrames" id=4]
+[ext_resource path="res://Sprites/UI/Stunbar out.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/UI/Stunbar in.png" type="Texture" id=6]
 
 [sub_resource type="ParticlesMaterial" id=1]
 emission_shape = 2
@@ -40,6 +42,34 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
 }
 
+[sub_resource type="Animation" id=5]
+resource_name = "Stunbar"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Stunbar:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Stunbar:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
 [node name="Glitch" type="KinematicBody2D"]
 script = ExtResource( 1 )
 __meta__ = {
@@ -55,12 +85,34 @@ centered = false
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 4 )
-animation = "l"
+animation = "l_walk"
+frame = 2
+playing = true
 
 [node name="Particles2D" type="Particles2D" parent="."]
 lifetime = 0.15
 explosiveness = 1.0
 process_material = SubResource( 1 )
+
+[node name="Stunbar" type="TextureProgress" parent="."]
+visible = false
+margin_left = -7.0
+margin_top = -32.0
+margin_right = 33.0
+margin_bottom = 8.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+texture_progress = ExtResource( 5 )
+fill_mode = 8
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Stunbar2" type="Sprite" parent="Stunbar"]
+position = Vector2( 2, 2 )
+texture = ExtResource( 6 )
+centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 1, 15 )
@@ -74,6 +126,7 @@ shape = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Spin = SubResource( 4 )
+anims/Stunbar = SubResource( 5 )
 
 [node name="TimerStunBuffer" type="Timer" parent="."]
 wait_time = 0.02
@@ -83,6 +136,10 @@ one_shot = true
 wait_time = 3.0
 one_shot = true
 
+[node name="TimerStunCooldown" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [node name="TimerDie" type="Timer" parent="."]
 wait_time = 0.35
 one_shot = true
@@ -90,4 +147,5 @@ one_shot = true
 [connection signal="area_entered" from="Hitbox" to="." method="HBEntered"]
 [connection signal="timeout" from="TimerStunBuffer" to="." method="Stun"]
 [connection signal="timeout" from="TimerStun" to="." method="StunEnd"]
+[connection signal="timeout" from="TimerStunCooldown" to="." method="StunCooldown"]
 [connection signal="timeout" from="TimerDie" to="." method="TimerDie"]

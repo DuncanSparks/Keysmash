@@ -44,6 +44,7 @@ public class Player : KinematicBody2D
 	private Timer timerDash;
 	private Particles2D partsRun;
 	private Camera2D playerCamera;
+	private AnimationPlayer animPlayer;
 
 	// ================================================================
 
@@ -58,8 +59,8 @@ public class Player : KinematicBody2D
 		timerDash = GetNode<Timer>("TimerDash");
 		partsRun = GetNode<Particles2D>("PartsRun");
 		playerCamera = GetNode<Camera2D>("Camera2D");
+		animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
-
 
 
 	public override void _Process(float delta)
@@ -70,7 +71,6 @@ public class Player : KinematicBody2D
 			Update();
 		#endif
 	}
-
 
 
 	public override void _PhysicsProcess(float delta)
@@ -100,6 +100,11 @@ public class Player : KinematicBody2D
 
 				ChangeDirection(ref axisX, ref axisY);
 				Animation();
+				/* if (Input.IsActionJustPressed("player_moveleft"))
+					animPlayer.Play("FlipLeft");
+
+				if (Input.IsActionJustPressed("player_moveright"))
+					animPlayer.Play("FlipRight"); */
 
 				break;
 			}

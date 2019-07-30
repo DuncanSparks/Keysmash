@@ -1,7 +1,6 @@
 [300]
 {
-	Glitch 500 200
-	Glitch 500 300
-	Flyer 100 10
+	Glitch 500 140
+	Glitch 100 135
 }
 

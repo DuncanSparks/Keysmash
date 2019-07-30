@@ -16,6 +16,7 @@ public class Glitch : KinematicBody2D
 
 	private float speed = 50f;
 	private bool move = true;
+	private bool stunnable = true;
 	private bool stunned = false;
 	private bool shake = false;
 
@@ -24,6 +25,7 @@ public class Glitch : KinematicBody2D
 	private AnimationPlayer animPlayer;
 	private Timer timerStunBuffer;
 	private Timer timerStun;
+	private Timer timerStunCooldown;
 	private Timer timerDie;
 
 	private CollisionShape2D coll;
@@ -42,6 +44,7 @@ public class Glitch : KinematicBody2D
 		animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		timerStunBuffer = GetNode<Timer>("TimerStunBuffer");
 		timerStun = GetNode<Timer>("TimerStun");
+		timerStunCooldown = GetNode<Timer>("TimerStunCooldown");
 		timerDie = GetNode<Timer>("TimerDie");
 
 		coll = GetNode<CollisionShape2D>("CollisionShape2D");
@@ -67,6 +70,8 @@ public class Glitch : KinematicBody2D
 		if (shake)
 			spr.Position = new Vector2(Mathf.RoundToInt((float)GD.RandRange(-2, 2)), Mathf.RoundToInt((float)GD.RandRange(-2, 2)));
 
+		Animate();
+
 		MoveAndSlide(motion);
 	}
 
@@ -77,18 +82,34 @@ public class Glitch : KinematicBody2D
 		move = false;
 		stunned = true;
 		coll.Disabled = true;
-		spr.Play("l_dizzy");
+		//spr.Play("l_dizzy");
 		animPlayer.Play("Spin");
 		timerStun.Start();
 	}
 
 	// ================================================================
 
+	private void Animate()
+	{
+		if (move)
+			spr.Play("l_walk");
+		else
+			spr.Play("l");
+	
+		if (stunned)
+			spr.Play("l_dizzy");
+
+		if (shake)
+			spr.Play("l_hurt");
+	}
+
+
 	private void HBEntered(Area2D area)
 	{
-		if (!stunned && area.IsInGroup("PlayerHB") && Player.State == Player.ST.Dash)
+		if (!stunned && stunnable && area.IsInGroup("PlayerHB") && Player.State == Player.ST.Dash)
 			timerStunBuffer.Start();
 	}
+
 
 	private void PromptDestroyed()
 	{
@@ -104,7 +125,16 @@ public class Glitch : KinematicBody2D
 		move = true;
 		coll.Disabled = false;
 		spr.Play("l");
+		stunnable = false;
 		stunned = false;
+		animPlayer.Play("Stunbar");
+		timerStunCooldown.Start();
+	}
+
+
+	private void StunCooldown()
+	{
+		stunnable = true;
 	}
 
 
@@ -114,6 +144,7 @@ public class Glitch : KinematicBody2D
 		var parts = (Particles2D)partsDie.Instance();
 		parts.Position = Position;
 		parts.Emitting = true;
+		GetTree().GetRoot().GetNode<Node2D>("Stage").GetNode<LevelController>("LevelController").WaveProgress++;
 		GetTree().GetRoot().AddChild(parts);
 		QueueFree();
 	}

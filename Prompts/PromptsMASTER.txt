@@ -36,7 +36,7 @@ Fulfilment and enjoyment
 Fly off the roof
 Non-vegan French fries
 Low-budget ice cream
-Hanging onto anything
+Hang on tight
 Crab clause
 Regular expression
 Inline function
@@ -330,3 +330,194 @@ No major qualms
 Hey! Listen!
 Bench trial
 Focal length
+Hopeless situation
+Do not want
+Born free
+Aftershocks
+Potentially dangerous
+35mm
+Ground floor
+Fun box
+Keycap puller
+Vintage electronics
+Fascinating mechanism
+Extra-terrestrial
+Cup of cola
+Keyboard player
+Governmental affairs
+The quick brown fox jumps over the lazy dragon
+Runtime padding
+Please excuse my dear Aunt Sally
+Operator overload
+Bergamot tea
+Sublimation
+Condensation
+Evaporation
+Transpire
+Ephemeral
+Stag
+Goliath
+Version control
+Ante up
+Wag your tongue
+Flapjack
+Critical meeting agenda
+How do you explain that?
+Typing prompt
+Offshore imports
+Goggles
+Gaggles
+Straggler
+Nevermore
+Euclidean geometry
+Quod erat demonstrandum
+Quid pro quo
+Longer than a short pier
+Calculator
+Conservationalism is not a word
+Extra large
+Irrelevance
+Cable management
+I need my glasses
+Scroll lock
+Return key
+Something isn't right here
+Hunter/hunted
+Unconditional satire
+Cleanse yourself of sin
+Undue alarm
+Cordial discourse
+Two birds with one stone
+Gamma ray
+Rocket launch
+Bunk bed
+Leaky beard hair
+Ping
+Just in time
+Time to shine
+ABS
+PBT
+Dimethyl ether
+Fast food
+Dad jokes
+Jack of all trades
+Motorist
+N-key rollover
+Maintenance droid
+Android
+Luxury sedan
+Yippee ki yay
+Acute
+Broken bonds
+'78
+Water resistant
+Think outside the box
+Yesman
+Be positive
+Chicanery
+Duh!
+Lemming caravan
+Service manual
+Out of control
+Compact disc
+Floppy disk
+Random access memory
+Read only memory
+Procrastination
+Big blue whale
+Pasta
+Howdy
+Funk
+Heroic
+Chocolate
+Suffer
+Missionary
+Warranty
+Tranquilizer
+Zeal
+Poor judgment
+Axe
+Wicked plan
+Stampede
+No, don't leave
+Jacket review
+Ampersand
+Hash code
+Get the blood pumping
+Life detector
+Quotient
+Advanced salad
+Simple spoon
+What?
+Compromiser
+Scumbag
+Zombie apocalypse
+Vampire bat
+Knock-down-ginger
+Egghead
+Express espresso
+Who are you?
+Direct object
+Preposition
+Subject verb agreement
+Magic tree
+Chainsaw
+Concord grape
+Go-getter
+Hierophant
+Star-crossed lovers
+Panache
+The poem ended
+At ease, gentlemen!
+Flat footing
+Fish out of water
+Colosseum
+Immunodeficiency
+Spare munitions
+Surplus
+Death of the ego
+Wrap it up
+Finish the sentence
+The old man the boat
+Passive assumption
+The raft sailed up the river crashed
+Robber baron
+I'd buy that for a dollar
+Look at your left
+Crazy eights
+A piece of garbage
+Traffic citation
+Outbreak
+Heart of steel
+Device
+Ow!
+Los Muertos
+Itchy back
+Dry air
+Empathy
+Rubber dome
+Virtual private network
+Anti-lock braking system
+Curtail
+Backpack
+Wrapper class
+Override method
+Member variable
+Structure
+Concatenation
+Explicit cast
+Implicit differentiation
+Lambda calculus
+Limacon
+Cardoid
+Improper integral
+Pause break
+Sticky
+I have an explanation
+Et tu, Brute?
+Goat milk
+The future is here
+Injection moulding
+Amalgamation
+Dry cereal
+Rendezvous

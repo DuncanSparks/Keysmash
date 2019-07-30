@@ -14,13 +14,20 @@ public class LevelController : Node2D
 	private LevelList levelData = new LevelList();
 
 	private int levelProgress = 0;
+	private int levelSize = 0;
 	private bool stopped = false;
+	private int waveProgress = 0;
+	private int waveSize = 1;
 
 	private Regex indexRegex = new Regex(@"\[(\d+)\]");
 	private Regex lineRegex = new Regex(@"(\w+)\s+(\d+)\s+(\d+)");
 
 	// Enemy references
 	private PackedScene enemyGlitch = GD.Load<PackedScene>("res://Instances/Enemies/Glitch.tscn");
+
+	// ================================================================
+
+	public int WaveProgress { get => waveProgress; set => waveProgress = value; }
 
 	// ================================================================
 	
@@ -36,17 +43,30 @@ public class LevelController : Node2D
 	{
 		if (!stopped)
 		{
-			if (Player.PlayerCamera.GetCameraPosition().x >= levelData[levelProgress].Item1)
+			if (levelProgress < levelSize && Player.PlayerCamera.GetCameraPosition().x >= levelData[levelProgress].Item1)
 			{
-				levelProgress++;
 				stopped = true;
 				Player.PlayerCamera.Current = false;
+				var currentEnemies = levelData[levelProgress].Item2;
+				waveProgress = 0;
+				waveSize = currentEnemies.Count;
+				SpawnEnemies(ref currentEnemies);
+				levelProgress++;
+			}
+		}
+		else
+		{
+			if (waveProgress >= waveSize)
+			{
+				stopped = false;
+				Player.PlayerCamera.Current = true;
 			}
 		}
 	}
 
 	// ================================================================
 
+	
 	private void ReadInfoFile()
 	{
 		File file = new File();
@@ -68,6 +88,7 @@ public class LevelController : Node2D
 						{
 							var currentLine = indexRegex.Match(line);
 							currentCoord = Int32.Parse(currentLine.Groups[1].ToString());
+							levelSize++;
 							break;
 						}
 

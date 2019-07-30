@@ -12,6 +12,9 @@ extents = Vector2( 378, 56 )
 extents = Vector2( 378, 7 )
 
 [node name="Stage" type="Node2D"]
+__meta__ = {
+"_edit_vertical_guides_": [ 300.0 ]
+}
 
 [node name="LevelController" parent="." instance=ExtResource( 1 )]
 infoFile = "res://Levels/Test.txt"
