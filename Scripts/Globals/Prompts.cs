@@ -108,8 +108,8 @@ public class Prompts : Node
 	public override void _Process(float delta)
 	{
 		// Debug
-		if (Input.IsActionJustPressed("debug_1"))
-			AddPrompt(PromptsList[Mathf.RoundToInt((float)GD.RandRange(0, PromptsList.Count - 1))], new Vector2((int)GD.RandRange(0, 300), (int)GD.RandRange(0, 180)), null, new Vector2(0, 0));
+		//if (Input.IsActionJustPressed("debug_1"))
+		//	AddPrompt(PromptsList[Mathf.RoundToInt((float)GD.RandRange(0, PromptsList.Count - 1))], new Vector2((int)GD.RandRange(0, 300), (int)GD.RandRange(0, 180)), null, new Vector2(0, 0));
 
 		if (Input.IsActionJustPressed("cancel_prompt") && anyFocused)
 		{

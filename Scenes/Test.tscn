@@ -60,4 +60,3 @@ position = Vector2( 23, 123 )
 
 [node name="Glitch" parent="." instance=ExtResource( 4 )]
 position = Vector2( 95, 123 )
-

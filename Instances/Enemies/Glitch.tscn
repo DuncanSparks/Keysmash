@@ -85,8 +85,7 @@ centered = false
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 4 )
-animation = "l_walk"
-frame = 2
+animation = "l"
 playing = true
 
 [node name="Particles2D" type="Particles2D" parent="."]
@@ -143,7 +142,6 @@ one_shot = true
 [node name="TimerDie" type="Timer" parent="."]
 wait_time = 0.35
 one_shot = true
-
 [connection signal="area_entered" from="Hitbox" to="." method="HBEntered"]
 [connection signal="timeout" from="TimerStunBuffer" to="." method="Stun"]
 [connection signal="timeout" from="TimerStun" to="." method="StunEnd"]

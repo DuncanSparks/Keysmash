@@ -65,7 +65,7 @@ public class Player : KinematicBody2D
 
 	public override void _Process(float delta)
 	{
-		partsRun.Emitting = Mathf.Abs(axisX) > 0.5 || Mathf.Abs(axisY) > 0.5;
+		partsRun.Emitting = state == ST.Ground && (Mathf.Abs(axisX) > 0.5 || Mathf.Abs(axisY) > 0.5);
 
 		#if DEBUG_DRAW
 			Update();
@@ -76,6 +76,14 @@ public class Player : KinematicBody2D
 	public override void _PhysicsProcess(float delta)
 	{
 		ZIndex = (int)Position.y;
+		//GD.Print(GetViewportTransform().origin);
+
+		//GD.Print(playerCamera.GetCameraPosition());
+		//walls.Position = GetViewportTransform().origin;
+
+		//GD.Print(playerCamera.GetCameraPosition());
+		//walls.Position = new Vector2(playerCamera.GetCameraPosition().x + 320, 180);
+		//GD.Print(walls.Position);
 
 		axisX = Input.GetActionStrength("player_moveright") - Input.GetActionStrength("player_moveleft");
 		axisY = Input.GetActionStrength("player_movedown") - Input.GetActionStrength("player_moveup");
@@ -106,6 +114,11 @@ public class Player : KinematicBody2D
 				if (Input.IsActionJustPressed("player_moveright"))
 					animPlayer.Play("FlipRight"); */
 
+				if (Input.IsActionJustPressed("debug_1"))
+				{
+					Controller.Dialogue("res://Dialogue/test.txt", 0, Position);
+				}
+
 				break;
 			}
 
@@ -129,6 +142,26 @@ public class Player : KinematicBody2D
 		DrawLine(new Vector2(0, 0), new Vector2(Input.GetActionStrength("player_moveright") - Input.GetActionStrength("player_moveleft"), Input.GetActionStrength("player_movedown") - Input.GetActionStrength("player_moveup")) * 80f, new Color(1, 1, 1, 1), 5);
 	}
 #endif
+
+	// ================================================================
+
+	public static void Stop()
+	{
+		Player.Main.velocity = Vector2.Zero;
+		Player.Main.spr.Play("dr");
+	}
+
+
+	public static void PlaySpriteAnimation(string anim)
+	{
+		Player.Main.spr.Play(anim);
+	}
+
+
+	public static void PlayAnimation(string anim)
+	{
+		Player.Main.GetNode<AnimationPlayer>("AnimationPlayer2").Play(anim);
+	}
 
 	// ================================================================
 

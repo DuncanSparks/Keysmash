@@ -7,6 +7,9 @@ using LevelList = System.Collections.Generic.List<System.Tuple<int, System.Colle
 
 public class LevelController : Node2D
 {
+	[Export]
+	private bool run = true;
+
 	[Export(PropertyHint.File, "*.txt")]
 	private string infoFile = string.Empty;
 
@@ -33,7 +36,8 @@ public class LevelController : Node2D
 	
 	public override void _Ready()
 	{
-		ReadInfoFile();
+		if (run)
+			ReadInfoFile();
 
 		//PrintLevelData();
 	}
@@ -138,6 +142,7 @@ public class LevelController : Node2D
 				{
 					var inst = (Glitch)enemyGlitch.Instance();
 					inst.Position = enemy.Item2;
+					inst.SpawnPrompt();
 					GetTree().GetRoot().AddChild(inst);
 					break;
 				}

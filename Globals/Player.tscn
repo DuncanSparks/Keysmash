@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/Globals/Player.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Characters/Shadow.png" type="Texture" id=2]
@@ -39,8 +39,7 @@ height = 14.0
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 13, 19 )
 
-[sub_resource type="Animation" id=9]
-resource_name = "Iframes"
+[sub_resource type="Animation" id=7]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:visible")
@@ -55,8 +54,7 @@ tracks/0/keys = {
 "values": [ false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "FlipLeft"
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:animation")
 tracks/0/interp = 1
@@ -82,8 +80,7 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "FlipRight"
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:animation")
 tracks/0/interp = 1
@@ -109,9 +106,26 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ) ]
 }
 
+[sub_resource type="Animation" id=10]
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.6, 0.8, 1, 1.2, 1.5, 1.8, 2.2, 2.7, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.757858, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
+}
+
 [node name="Player" type="KinematicBody2D" groups=[
 "Player",
 ]]
+collision_layer = 33
+collision_mask = 33
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -158,11 +172,6 @@ shape = SubResource( 5 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OverlapBox"]
 shape = SubResource( 6 )
 
-[node name="TimerDash" type="Timer" parent="."]
-process_mode = 0
-wait_time = 0.85
-one_shot = true
-
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 limit_left = 0
@@ -170,15 +179,19 @@ limit_top = 0
 limit_bottom = 180
 smoothing_enabled = true
 smoothing_speed = 8.0
-drag_margin_left = 0.5
-drag_margin_right = 0.5
+drag_margin_left = 0.25
+drag_margin_right = 0.25
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Iframes = SubResource( 9 )
+anims/Iframes = SubResource( 7 )
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
-playback_speed = 3.0
-anims/FlipLeft = SubResource( 7 )
-anims/FlipRight = SubResource( 8 )
+anims/FlipLeft = SubResource( 8 )
+anims/FlipRight = SubResource( 9 )
+anims/Spin = SubResource( 10 )
 
+[node name="TimerDash" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.85
+one_shot = true
 [connection signal="timeout" from="TimerDash" to="." method="TimerDashTimeout"]

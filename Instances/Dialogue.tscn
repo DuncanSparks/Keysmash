@@ -1,0 +1,218 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scripts/System/Dialogue.cs" type="Script" id=1]
+[ext_resource path="res://Audio/Text.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Sprites/UI/Textbox.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/Softsquare.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Audio/Text box 1.wav" type="AudioStream" id=5]
+[ext_resource path="res://Audio/Text box 2.wav" type="AudioStream" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 9
+font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "End"
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/NinePatchRect:margin_right")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 94, 94, 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/NinePatchRect:margin_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 42, 0 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.65 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "End"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CanvasLayer/NinePatchRect:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("CanvasLayer/Text:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/5/type = "audio"
+tracks/5/path = NodePath("Speaker")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 5 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 6 )
+} ],
+"times": PoolRealArray( 0, 0.3 )
+}
+
+[sub_resource type="Animation" id=3]
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/NinePatchRect:margin_right")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 94 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/NinePatchRect:margin_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0, 0, 42 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Start2"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CanvasLayer/Text:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("CanvasLayer/NinePatchRect:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/5/type = "audio"
+tracks/5/path = NodePath("Speaker")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 5 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 6 )
+} ],
+"times": PoolRealArray( 0, 0.3 )
+}
+
+[node name="Dialogue" type="Node2D"]
+script = ExtResource( 1 )
+textSound = ExtResource( 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer"]
+visible = false
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 12, 12 )
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="Text" type="Label" parent="CanvasLayer"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 89.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 1 )
+text = "Hello there"
+autowrap = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/End = SubResource( 2 )
+anims/Start = SubResource( 3 )
+
+[node name="Speaker" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="TimerRollText" type="Timer" parent="."]
+wait_time = 0.03
+
+[node name="TimerBuffer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+[connection signal="timeout" from="TimerRollText" to="." method="RollText"]
+[connection signal="timeout" from="TimerBuffer" to="." method="ResetBuffer"]

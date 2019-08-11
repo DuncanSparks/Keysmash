@@ -50,12 +50,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\Cutscenes\Cutscene.cs" />
+    <Compile Include="Scripts\Cutscenes\Cutscene_Tutorial1.cs" />
     <Compile Include="Scripts\Enemies\Glitch.cs" />
     <Compile Include="Scripts\Globals\Controller.cs" />
     <Compile Include="Scripts\Globals\Player.cs" />
     <Compile Include="Scripts\Globals\Prompts.cs" />
     <Compile Include="Scripts\Prompt.cs" />
     <Compile Include="Scripts\Scenes\Title.cs" />
+    <Compile Include="Scripts\System\CutsceneTrigger.cs" />
+    <Compile Include="Scripts\System\Dialogue.cs" />
     <Compile Include="Scripts\System\LevelController.cs" />
     <Compile Include="Scripts\Tools.cs" />
   </ItemGroup>

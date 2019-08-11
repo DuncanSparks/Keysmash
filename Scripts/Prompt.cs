@@ -7,7 +7,7 @@ public class Prompt : Node2D
 	private AudioStream shatterSound;
 
 	[Signal]
-	delegate void Destroyed();
+	public delegate void Destroyed();
 
 	private int textPosition = 0;
 	private string promptText = string.Empty;

@@ -10,11 +10,17 @@ public class Glitch : KinematicBody2D
 	private Vector2 followOffset = new Vector2(0, 0);
 
 	[Export]
+	private float speed = 50f;
+
+	[Export]
 	private AudioStream deathSound;
+
+	[Export]
+	private bool noAi = false;
 
 	private Vector2 motion = new Vector2(0, 0);
 
-	private float speed = 50f;
+	
 	private bool move = true;
 	private bool stunnable = true;
 	private bool stunned = false;
@@ -35,6 +41,8 @@ public class Glitch : KinematicBody2D
 	// ================================================================
 
 	public float Speed { set => speed = value; }
+	public bool NoAi { set => noAi = value; }
+	public Vector2 Motion { set => motion = value; }
 
 	// ================================================================
 	
@@ -50,8 +58,6 @@ public class Glitch : KinematicBody2D
 		coll = GetNode<CollisionShape2D>("CollisionShape2D");
 
 		//spr.Frames = enemySprites[Mathf.RoundToInt((float)GD.RandRange(0, enemySprites.Count))];
-	
-		Prompts.AddRandomPrompt(Position, this, followOffset);
 	}
 
 
@@ -59,23 +65,38 @@ public class Glitch : KinematicBody2D
 	{
 		ZIndex = (int)Position.y;
 		
-		if (move)
+		if (!noAi)
 		{
-			float angle = GetAngleTo(Player.Main.Position);
-			motion = new Vector2(Mathf.Cos(angle) * speed, Mathf.Sin(angle) * speed);
+			if (move)
+			{
+				float angle = GetAngleTo(Player.Main.Position);
+				motion = new Vector2(Mathf.Cos(angle) * speed, Mathf.Sin(angle) * speed);
+			}
+			else
+				motion = new Vector2(0, 0);
+
+			if (shake)
+				spr.Position = new Vector2(Mathf.RoundToInt((float)GD.RandRange(-2, 2)), Mathf.RoundToInt((float)GD.RandRange(-2, 2)));
+		
+			Animate();
 		}
-		else
-			motion = new Vector2(0, 0);
-
-		if (shake)
-			spr.Position = new Vector2(Mathf.RoundToInt((float)GD.RandRange(-2, 2)), Mathf.RoundToInt((float)GD.RandRange(-2, 2)));
-
-		Animate();
 
 		MoveAndSlide(motion);
 	}
 
 	// ================================================================
+
+	public void SpawnPrompt()
+	{
+		Prompts.AddRandomPrompt(Position, this, followOffset);
+	}
+
+
+	public void PlayAnimation(string anim)
+	{
+		spr.Play(anim);
+	}
+
 
 	public void Stun()
 	{
@@ -92,15 +113,15 @@ public class Glitch : KinematicBody2D
 	private void Animate()
 	{
 		if (move)
-			spr.Play("l_walk");
+			spr.Play(motion.x < 0 ? "l_walk" : "r_walk");
 		else
-			spr.Play("l");
+			spr.Play(motion.x < 0 ? "l" : "r");
 	
 		if (stunned)
-			spr.Play("l_dizzy");
+			spr.Play(motion.x < 0 ? "l_dizzy" : "r_dizzy");
 
 		if (shake)
-			spr.Play("l_hurt");
+			spr.Play(motion.x < 0 ? "l_hurt" : "r_hurt");
 	}
 
 
@@ -115,7 +136,7 @@ public class Glitch : KinematicBody2D
 	{
 		move = false;
 		shake = true;
-		spr.Play("l_hurt");
+		spr.Play(motion.x < 0 ? "l_hurt" : "r_hurt");
 		timerDie.Start();
 	}
 
@@ -124,7 +145,7 @@ public class Glitch : KinematicBody2D
 	{
 		move = true;
 		coll.Disabled = false;
-		spr.Play("l");
+		spr.Play(motion.x < 0 ? "l" : "r");
 		stunnable = false;
 		stunned = false;
 		animPlayer.Play("Stunbar");

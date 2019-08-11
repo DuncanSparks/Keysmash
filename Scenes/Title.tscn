@@ -238,7 +238,6 @@ shape = SubResource( 7 )
 __meta__ = {
 "_edit_lock_": true
 }
-
 [connection signal="mouse_entered" from="Area1" to="." method="SetMenuPos" binds= [ 0 ]]
 [connection signal="mouse_entered" from="Area2" to="." method="SetMenuPos" binds= [ 1 ]]
 [connection signal="mouse_entered" from="Area3" to="." method="SetMenuPos" binds= [ 2 ]]

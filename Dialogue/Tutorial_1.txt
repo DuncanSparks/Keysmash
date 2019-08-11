@@ -1,0 +1,82 @@
+[0]
+What's going on?
+What are these things?
+#
+
+[1]
+I demand you release me this instant!
+#
+
+[2]
+OW! Get off me, you foul creatures!
+Would you mind lending a hand, sir?!
+#
+
+[3]
+What did you just do?
+#
+
+[4]
+I purged those vile fiends from the program.
+Runtime debugging, if you will.
+#
+
+[5]
+...
+What are they?
+They ransacked the town and took everyone away!
+#
+
+[6]
+They are anomalies in the program's execution.
+I'm not sure where they came from...
+...But I do know that they're very impolite.
+Those beasts tore me directly out of the assembly! THE NERVE!
+#
+
+[7]
+Unfortunately, your friends are the least of our worries.
+Those fiends could spell the end for this entire world!
+If they manage to reach the hub of the program...
+...they could make us all go POOF in an instant!
+#
+
+[8]
+Well, we've got to stop them!
+#
+
+[9]
+Yes, indeed.
+Sadly, I do not have enough power to stop them myself.
+I will require assistance from the end user.
+#
+
+[10]
+The what?
+#
+
+[11]
+I wouldn't expect you to understand.
+But I will require your assistance as well.
+We can drive those fiends out of this world, but only with the power of... teamwork.
+#
+
+[12]
+Then let's go stop them!
+Uh... what was your name again?
+#
+
+[13]
+My name is Hex.
+I am the staunch protector of this world, and I will not allow those beasts to destroy it!
+...And yours?
+#
+
+[14]
+Jatsu.
+#
+
+[15]
+Then let us go, Jatsu!
+Let us purge our world of these monstrous anomalies!
+#
